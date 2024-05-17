@@ -65,6 +65,8 @@
     <module>zookeeper-recipes</module>
     <module>zookeeper-assembly</module>
     <module>zookeeper-compatibility-tests</module>
+    <module>test-jacoco-coverage</module>
+    <module>dummy</module>
   </modules>
 
   <scm>
@@ -536,6 +538,8 @@
         </pluginManagement>
       </build>
     </profile>
+
+
   </profiles>
 
   <properties>
@@ -545,6 +549,12 @@
     <project.build.outputTimestamp>1691130453</project.build.outputTimestamp>
     <dependency.locations.enabled>false</dependency.locations.enabled>
     <surefire.version>2.22.1</surefire.version>
+
+    <sonar.projectKey>chiaraiurato_zookeeper</sonar.projectKey>
+    <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
+    <!-- Sonar Cloud dependencies -->
+    <sonar.organization>chiaraiurato</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
     <surefire-forkcount>8</surefire-forkcount>
     <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -579,6 +589,7 @@
     <!-- parameters to pass to C client build -->
     <c-client-openssl>yes</c-client-openssl>
     <c-client-sasl>yes</c-client-sasl>
+
 
   </properties>
 
@@ -927,6 +938,17 @@
           <artifactId>cyclonedx-maven-plugin</artifactId>
           <version>2.7.9</version>
        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>3.7.0.1746</version>
+        </plugin>
+
       </plugins>
     </pluginManagement>
 
