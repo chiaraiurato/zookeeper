@@ -288,6 +288,45 @@
   </developers>
 
   <profiles>
+    <!-- JaCoCo profile -->
+    <profile>
+      <id>JaCoCo-coverage</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+        <property>
+          <name>!skipJaCoCoCoverage</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.11</version>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>report</id>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+                <configuration>
+                  <formats>
+                    <format>HTML</format>
+                  </formats>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
     <profile>
       <id>full-build</id>
       <modules>
@@ -358,6 +397,12 @@
       <build>
         <pluginManagement>
           <plugins>
+            <plugin>
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+              <version>0.8.11</version>
+            </plugin>
+
             <plugin>
               <groupId>org.eclipse.m2e</groupId>
               <artifactId>lifecycle-mapping</artifactId>
@@ -549,7 +594,9 @@
     <project.build.outputTimestamp>1691130453</project.build.outputTimestamp>
     <dependency.locations.enabled>false</dependency.locations.enabled>
     <surefire.version>2.22.1</surefire.version>
-
+    <!-- JACOCO REPORT PATH -->
+    <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/test-jacoco-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <!-- SONARCLOUD -->
     <sonar.projectKey>chiaraiurato_zookeeper</sonar.projectKey>
     <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
     <!-- Sonar Cloud dependencies -->
@@ -948,8 +995,7 @@
           <artifactId>sonar-maven-plugin</artifactId>
           <version>3.7.0.1746</version>
         </plugin>
-
-      </plugins>
+  </plugins>
     </pluginManagement>
 
     <plugins>
