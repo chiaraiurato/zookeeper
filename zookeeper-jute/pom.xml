@@ -45,6 +45,7 @@
 
   <build>
     <plugins>
+      <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -52,7 +53,7 @@
         <configuration>
           <javadocExecutable>/usr/lib/jvm/java-8-openjdk-amd64/bin/javadoc</javadocExecutable>
         </configuration>
-      </plugin>
+      </plugin> -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>javacc-maven-plugin</artifactId>
