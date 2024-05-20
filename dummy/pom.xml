@@ -11,11 +11,6 @@
 
     <artifactId>dummy</artifactId>
     <packaging>jar</packaging>
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -24,12 +19,13 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+        <!--
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.1</version>
             <scope>test</scope>
-        </dependency>
+        </dependency> -->
     </dependencies>
 
     <build>
