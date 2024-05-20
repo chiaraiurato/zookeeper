@@ -290,7 +290,7 @@
   <profiles>
     <!-- JaCoCo profile -->
     <profile>
-      <id>JaCoCo-coverage</id>
+      <id>JaCoCo-Coverage</id>
       <activation>
         <activeByDefault>true</activeByDefault>
         <property>
