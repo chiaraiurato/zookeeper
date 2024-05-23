@@ -1,3 +1,5 @@
+package org.apache.zookeeper.cli;
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -16,10 +18,8 @@
  * limitations under the License.
  */
 
-package org.apache.zookeeper.cli;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Unit test for {@link CommandFactory}.
@@ -33,6 +33,6 @@ public class CommandFactoryTest {
     public void testCommandCreation() {
         CliCommand cliCommand =
                 CommandFactory.getInstance(CommandFactory.Command.CREATE);
-        assertTrue(cliCommand instanceof CreateCommand);
+        Assert.assertTrue(cliCommand instanceof CreateCommand);
     }
 }

@@ -66,7 +66,6 @@
     <module>zookeeper-assembly</module>
     <module>zookeeper-compatibility-tests</module>
     <module>test-jacoco-coverage</module>
-    <module>dummy</module>
   </modules>
 
   <scm>
@@ -292,13 +291,22 @@
     <profile>
       <id>JaCoCo-Coverage</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
         <property>
           <name>!skipJaCoCoCoverage</name>
         </property>
+        <activeByDefault>false</activeByDefault>
       </activation>
       <build>
         <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <!-- custom -->
+              <argLine>@{argLine}</argLine>
+            </configuration>
+          </plugin>
+
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
@@ -312,14 +320,10 @@
               </execution>
               <execution>
                 <id>report</id>
+                <phase>verify</phase>
                 <goals>
                   <goal>report</goal>
                 </goals>
-                <configuration>
-                  <formats>
-                    <format>HTML</format>
-                  </formats>
-                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -397,12 +401,6 @@
       <build>
         <pluginManagement>
           <plugins>
-            <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.8.11</version>
-            </plugin>
-
             <plugin>
               <groupId>org.eclipse.m2e</groupId>
               <artifactId>lifecycle-mapping</artifactId>
@@ -562,6 +560,7 @@
           <plugin>
             <groupId>org.sonarsource.scanner.maven</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.7.0.1746</version>
           </plugin>
         </plugins>
         <pluginManagement>
@@ -593,7 +592,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.outputTimestamp>1691130453</project.build.outputTimestamp>
     <dependency.locations.enabled>false</dependency.locations.enabled>
-    <surefire.version>2.22.1</surefire.version>
+    <surefire.version>3.2.5</surefire.version>
     <!-- JACOCO REPORT PATH -->
     <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/test-jacoco-coverage/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <!-- SONARCLOUD -->
@@ -995,6 +994,12 @@
           <artifactId>sonar-maven-plugin</artifactId>
           <version>3.7.0.1746</version>
         </plugin>
+        <!--
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.11</version>
+        </plugin> -->
   </plugins>
     </pluginManagement>
 

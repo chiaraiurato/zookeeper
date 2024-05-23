@@ -155,7 +155,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -278,21 +278,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-        <!--
-        <configuration>
-          <includes>
-            <include>**/*Test.java</include>
-          </includes>
-          <forkCount>${surefire-forkcount}</forkCount>
-          <reuseForks>false</reuseForks>
-          <argLine>-Xmx512m -Dtest.junit.threads=${surefire-forkcount} -Dzookeeper.junit.threadid=${surefire.forkNumber} -javaagent:${org.jmockit:jmockit:jar}</argLine>
-          <basedir>${project.basedir}</basedir>
-          <systemPropertyVariables>
-            <build.test.dir>${project.build.directory}/surefire</build.test.dir>
-            <zookeeper.DigestAuthenticationProvider.superDigest>super:D/InIHSb7yEEbrWz8b9l71RjZJU=</zookeeper.DigestAuthenticationProvider.superDigest>
-          </systemPropertyVariables>
-        </configuration> -->
+          <version>3.2.5</version>
       </plugin>
 
       <plugin>
@@ -352,26 +338,37 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report-aggregate</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
   <profiles>
+
+
     <!-- BADUA PROFILE -->
     <profile>
       <id>BaDua-Coverage</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
-      <properties>
-        <!-- Use a stable version istead of SNAPSHOT one -->
-        <ba-dua.version>0.6.0</ba-dua.version>
-        <argLine>-javaagent:target/dependency/ba-dua-agent-rt-${ba-dua.version}-all.jar -Doutput.file=target/badua.ser</argLine>
-      </properties>
       <!-- Needed for generate the report -->
       <dependencies>
         <dependency>
           <groupId>br.usp.each.saeg</groupId>
           <artifactId>ba-dua-cli</artifactId>
-          <version>${ba-dua.version}</version>
+          <version>0.6.0</version>
         </dependency>
       </dependencies>
       <build>
@@ -393,12 +390,24 @@
                       <groupId>br.usp.each.saeg</groupId>
                       <artifactId>ba-dua-agent-rt</artifactId>
                       <classifier>all</classifier>
-                      <version>${ba-dua.version}</version>
+                      <version>0.6.0</version>
                     </artifactItem>
                   </artifactItems>
                 </configuration>
               </execution>
             </executions>
+          </plugin>
+
+          <!-- Execute tests -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <argLine>
+                -javaagent:target/dependency/ba-dua-agent-rt-0.6.0-all.jar
+                -Doutput.file=target/badua.ser
+              </argLine>
+            </configuration>
           </plugin>
 
           <!-- Generate report in xml format -->
@@ -425,6 +434,47 @@
                     <argument>${project.build.directory}/badua.xml</argument>
                   </arguments>
                 </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- MUTATION PIT -->
+    <profile>
+      <id>mutationPIT</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <withHistory>true</withHistory>
+        <pitest.version>1.8.0</pitest.version>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <version>1.8.0</version>
+            <configuration>
+              <timeoutConstant>6000</timeoutConstant>
+              <targetClasses>
+                <param>org.apache.zookeeper.common.PathUtils</param>
+                <param>org.apache.zookeeper.common.PathTrie</param>
+              </targetClasses>
+              <targetTests>
+                <param>org.apache.zookeeper.common.TestPathUtilsValid</param>
+                <param>org.apache.zookeeper.common.TestPathUtilsInvalid</param>
+                <param>org.apache.zookeeper.common.TestPathUtilsInvalidUnicode</param>
+              </targetTests>
+            </configuration>
+            <executions>
+              <execution>
+                <id>PIT</id>
+                <phase>test-compile</phase>
+                <goals>
+                  <goal>mutationCoverage</goal>
+                </goals>
               </execution>
             </executions>
           </plugin>
