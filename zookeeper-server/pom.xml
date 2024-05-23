@@ -446,27 +446,17 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
-      <properties>
-        <withHistory>true</withHistory>
-        <pitest.version>1.8.0</pitest.version>
-      </properties>
       <build>
         <plugins>
           <plugin>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-maven</artifactId>
-            <version>1.8.0</version>
             <configuration>
               <timeoutConstant>6000</timeoutConstant>
               <targetClasses>
                 <param>org.apache.zookeeper.common.PathUtils</param>
                 <param>org.apache.zookeeper.common.PathTrie</param>
               </targetClasses>
-              <targetTests>
-                <param>org.apache.zookeeper.common.TestPathUtilsValid</param>
-                <param>org.apache.zookeeper.common.TestPathUtilsInvalid</param>
-                <param>org.apache.zookeeper.common.TestPathUtilsInvalidUnicode</param>
-              </targetTests>
             </configuration>
             <executions>
               <execution>
