@@ -454,14 +454,14 @@
             <configuration>
               <timeoutConstant>6000</timeoutConstant>
               <targetClasses>
-                <param>org.apache.zookeeper.common.PathUtils</param>
+                <param>org.apache.zookeeper.server.persistence.FileTxnLog</param>
                 <param>org.apache.zookeeper.common.PathTrie</param>
               </targetClasses>
             </configuration>
             <executions>
               <execution>
                 <id>PIT</id>
-                <phase>test-compile</phase>
+                <phase>verify</phase>
                 <goals>
                   <goal>mutationCoverage</goal>
                 </goals>
