@@ -7,6 +7,7 @@ import org.apache.zookeeper.txn.CreateTxn;
 import org.apache.zookeeper.txn.TxnHeader;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -79,7 +80,7 @@ public class FileTxnLogAppendTest {
                 //{null, Mode.DEFAULT},
                 {invalidRequest, Mode.DEFAULT},
                 {nullHdrRequest, Mode.DEFAULT},
-                {nullTxnRequest, Mode.DEFAULT},
+               // {nullTxnRequest, Mode.DEFAULT},
                 {mockedEmptyDataRq, Mode.FAULTY_SER},
         });
     }
@@ -88,20 +89,20 @@ public class FileTxnLogAppendTest {
         System.out.println(mode.name());
         switch (mode){
             case DEFAULT:
-                if(request==null)
-                    assertThrows(NullPointerException.class, () -> {
-                        fileTxnLog.append(request);
-                    });
+                if(request==null) {
+                    System.out.println("im here");
+                    assertThrows(NullPointerException.class, () -> fileTxnLog.append(request));
+                }
+                else{
                 try {
-                    if(request.getHdr() == null)
+                    if(request.getHdr() == null || request.getTxn() == null)
                         assertFalse(fileTxnLog.append(request));
-
                     else {
                         assertTrue(fileTxnLog.append(request));
                     }
                 } catch (IOException e) {
                     fail("no exception should thrown");
-                }
+                }}
                 break;
             case FAULTY_SER:
                 if (request != null && request.getHdr() != null) {

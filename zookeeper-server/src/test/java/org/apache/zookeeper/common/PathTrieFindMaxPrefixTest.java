@@ -32,14 +32,19 @@ public class PathTrieFindMaxPrefixTest {
     }
     @Test
     public void testAddPath_validPath_multipleNode() {
-        pathTrie.addPath("node1");
-        pathTrie.addPath("node1/node2/");
-        pathTrie.addPath("node1/node2/node3");
-        assertEquals("/node1/node2", pathTrie.findMaxPrefix("node1/node2"));
+        pathTrie.addPath("/node1");
+        pathTrie.addPath("/node1/node2");
+        pathTrie.addPath("/node1/node2/node3");
+        pathTrie.addPath("/node1/node4");
+        pathTrie.addPath("/node1/node4/node5");
+        pathTrie.addPath("/node1/node4/node6");
+        pathTrie.addPath("/node1/node4/node6/node7");
+
+        assertEquals("/node1/node4/node6/node7", pathTrie.findMaxPrefix("/node1/node4/node6/node7/extra"));
     }
     @Test
     public void test_invalidPath_multipleNodes() {
-        String path = "node1/node2";
+        String path = "node2/node1";
         assertEquals("/", pathTrie.findMaxPrefix(path));
     }
 

@@ -57,7 +57,7 @@ public class PathTrieAddPathTest {
 
 //    @Test(expected = IllegalArgumentException.class)
 //    public void testAddPath_invalidPath_questionMarks() {
-//        String path = "\\\\\\";
+//        String path = "///////";
 //        pathTrie.addPath(path);
 //    }
     @After

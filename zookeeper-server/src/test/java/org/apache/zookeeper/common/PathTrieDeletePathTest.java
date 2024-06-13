@@ -21,7 +21,7 @@ public class PathTrieDeletePathTest {
     }
     @Test
     public void test_invalidPath_multipleNodes() {
-        String path = "node1/node2";
+        String path = "node2/node1";
         pathTrie.deletePath(path);
         assertFalse(pathTrie.existsNode(path));
     }
