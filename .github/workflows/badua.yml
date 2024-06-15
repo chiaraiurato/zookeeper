@@ -31,7 +31,7 @@ jobs:
           git checkout d2401f0
           mvn clean install
           cd ..
-      - name: Build and analyze bookkeeper project
+      - name: Build and analyze zookeeper project
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         run: mvn clean verify -P BaDua-Coverage
@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: BaDuaCoverage_Report
-          path: bookkeeper-server/target/badua.xml
+          path: zookeeper-server/target/badua.xml
           if-no-files-found: error
